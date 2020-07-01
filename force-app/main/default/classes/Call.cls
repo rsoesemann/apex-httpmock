@@ -24,13 +24,14 @@ public class Call {
 
 
     public void validate(String method, List<String> paramNames, List<Object> paramValues) {
-        System.assertEquals(this.method, method, 'Method not expected: ' + method);
+        System.assertEquals(this.method, method, 'Method not expected');
 
         Map<String, Object> actualParams = asMap(paramNames, paramValues);
+        System.assertEquals(expectedParams.size(), actualParams.size(), 'Parameters not expected');
 
         for(String param : actualParams.keySet()) {
             System.assert(expectedParams.containsKey(param), 'Parameter not expected: ' + param);
-            System.assertEquals(expectedParams.get(param), actualParams.get(param), 'Value not expected: ' + actualParams.get(param));
+            System.assertEquals(expectedParams.get(param), actualParams.get(param), 'Value not expected');
         }
     }
 

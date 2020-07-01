@@ -1,8 +1,7 @@
 public class MockClass implements StubProvider {
 
+    private Object instance;
     private List<Call> expectedCalls = new List<Call>();
-
-    public Object instance { get; private set; }
 
 
     // CONSTRUCTOR
@@ -21,6 +20,11 @@ public class MockClass implements StubProvider {
 
     public Boolean verify() {
         return (expectedCalls.isEmpty());
+    }
+
+
+    public Object instance() {
+        return instance;
     }
 
 

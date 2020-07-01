@@ -11,7 +11,7 @@ private class MockClass_Test {
                                                 .withParam('item', 'FizzBuzz')
                                                 .returning(true));
 
-        ShopBackend mockedBackend = (ShopBackend) mock.instance;
+        ShopBackend mockedBackend = (ShopBackend) mock.instance();
 
 
         // Exercise
@@ -19,6 +19,6 @@ private class MockClass_Test {
 
 
         // Verify
-        System.assert(mock.verify(), mock);
+        System.assert(mock.verify(), 'Not all expectations are met: ' + mock);
     }
 }
