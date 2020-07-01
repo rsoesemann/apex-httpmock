@@ -1,5 +1,5 @@
 @IsTest
-public class HttpMock implements HttpCalloutMock {
+public class MockHttp implements HttpCalloutMock {
 
     private static final String ANY_URL = null;
 
@@ -8,47 +8,47 @@ public class HttpMock implements HttpCalloutMock {
 
     // PUBLIC
 
-    public HttpMock get(String url, Object body, Integer statusCode) {
+    public MockHttp get(String url, Object body, Integer statusCode) {
         return mock('GET', url, body, statusCode);
     }
 
 
-    public HttpMock get(String url, Object body) {
+    public MockHttp get(String url, Object body) {
         return get(url, body, 200);
     }
 
 
-    public HttpMock get(Object body, Integer statusCode) {
+    public MockHttp get(Object body, Integer statusCode) {
         return get(ANY_URL, body, 200);
     }
 
 
-    public HttpMock post(String url, Object body, Integer statusCode) {
+    public MockHttp post(String url, Object body, Integer statusCode) {
         return mock('POST', url, body, statusCode);
     }
 
 
-    public HttpMock post(String url, Object body) {
+    public MockHttp post(String url, Object body) {
         return post(url, body, 200);
     }
 
 
-    public HttpMock post(Object body, Integer statusCode) {
+    public MockHttp post(Object body, Integer statusCode) {
         return post(ANY_URL, body, 200);
     }
 
 
-    public HttpMock put(String url, Object body, Integer statusCode) {
+    public MockHttp put(String url, Object body, Integer statusCode) {
         return mock('PUT', url, body, statusCode);
     }
 
 
-    public HttpMock put(String url, Object body) {
+    public MockHttp put(String url, Object body) {
         return put(url, body, 200);
     }
 
 
-    public HttpMock put(Object body, Integer statusCode) {
+    public MockHttp put(Object body, Integer statusCode) {
         return put(ANY_URL, body, 200);
     }
 
@@ -87,7 +87,7 @@ public class HttpMock implements HttpCalloutMock {
 
     // PRIVATE
 
-    private HttpMock mock(String method, String url, Object body, Integer statusCode) {
+    private MockHttp mock(String method, String url, Object body, Integer statusCode) {
         if(!responses.containsKey(method)) {
             responses.put(method, new Map<String, Object>());
         }
@@ -108,12 +108,12 @@ public class HttpMock implements HttpCalloutMock {
     }
 
 
-    private HttpMock mock(String method, String url, Object body) {
+    private MockHttp mock(String method, String url, Object body) {
         return mock(method, url, body, 200);
     }
 
 
-    private HttpMock mock(String method, Object body, Integer statusCode) {
+    private MockHttp mock(String method, Object body, Integer statusCode) {
         return mock(method, ANY_URL, body, 200);
     }
 
