@@ -1,0 +1,12 @@
+{
+  "orgName": "apex-httpmock_DEV",
+  "country": "US",
+  "edition": "Developer",
+  "language": "en_US",
+  "hasSampleData": false,
+  "settings": {
+    "lightningExperienceSettings": {
+      "enableS1DesktopEnabled": true
+    }
+  }
+}
