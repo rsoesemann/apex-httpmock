@@ -34,7 +34,7 @@ public class MockClass implements StubProvider {
         System.assert(!expectedCalls.isEmpty(), 'Didnt expect any call.');
 
         Call expectedCall = expectedCalls.remove(0);
-        expectedCall.validate(method, paramNames, paramValues);
+        expectedCall.validate(method, paramTypes, paramValues);
 
         return expectedCall.returnValue;
     }

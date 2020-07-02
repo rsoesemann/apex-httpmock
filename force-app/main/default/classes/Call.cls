@@ -2,7 +2,7 @@
 public class Call {
 
     private String method;
-    private Map<String, Object> expectedParams = new Map<String, Object>();
+    private List<Parameter> expectedParams = new List<Parameter>();
     public Object returnValue;
 
 
@@ -11,8 +11,8 @@ public class Call {
     }
 
 
-    public Call withParam(String name, Object value) {
-        expectedParams.put(name, value);
+    public Call param(Type type, Object value) {
+        expectedParams.add(new Parameter(type, value));
         return this;
     }
 
@@ -23,30 +23,46 @@ public class Call {
     }
 
 
-    public void validate(String method, List<String> paramNames, List<Object> paramValues) {
+    public void validate(String method, List<Type> paramTypes, List<Object> paramValues) {
         System.assertEquals(this.method, method, 'Method not expected');
 
-        Map<String, Object> actualParams = asMap(paramNames, paramValues);
+        List<Parameter> actualParams = asParameters(paramTypes, paramValues);
         System.assertEquals(expectedParams.size(), actualParams.size(), 'Parameters not expected');
 
-        for(String param : actualParams.keySet()) {
-            System.assert(expectedParams.containsKey(param), 'Parameter not expected: ' + param);
-            System.assertEquals(expectedParams.get(param), actualParams.get(param), 'Value not expected');
+        for(Integer i=0; i<actualParams.size(); i++) {
+            Parameter actual = actualParams[i];
+            Parameter expected = expectedParams[i];
+
+            System.assertEquals(expected.type, actual.type, 'Type not expected: ' + actual.type);
+            System.assertEquals(expected.value, actual.value, 'Value not expected' + actual.value);
         }
     }
 
 
     // PRIVATE
 
-    private Map<String, Object> asMap(List<String> keys, List<Object> values) {
-        System.assertEquals(keys.size(), values.size(), this);
+    private List<Parameter> asParameters(List<Type> types, List<Object> values) {
+        System.assertEquals(types.size(), values.size(), 'Type Value mismatch');
 
-        Map<String, Object> result = new Map<String, Object>();
+        List<Parameter> result = new List<Parameter>();
 
-        for(Integer i=0; i<keys.size() ; i++) {
-            result.put(keys[i], values[i]);
+        for(Integer i=0; i<types.size() ; i++) {
+            result.add( new Parameter(types[i], values[i]) );
         }
 
         return result;
+    }
+
+
+    // INNER
+
+    private class Parameter {
+        private Type type;
+        private Object value;
+
+        private Parameter(Type type, Object value) {
+            this.type = type;
+            this.value = value;
+        }
     }
 }

@@ -8,7 +8,7 @@ private class MockClass_Test {
         MockClass mock = new MockClass(ShopBackend.class)
                                 .expects(new Call('initialize'))
                                 .expects(new Call('hasInStock')
-                                                .withParam('item', 'FizzBuzz')
+                                                .param(String.class, 'FizzBuzz')
                                                 .returning(true));
 
         ShopBackend mockedBackend = (ShopBackend) mock.instance();
