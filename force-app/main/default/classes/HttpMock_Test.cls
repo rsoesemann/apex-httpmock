@@ -1,5 +1,5 @@
 @IsTest
-private class MockHttp_Test {
+private class HttpMock_Test {
 
     private static final PersonApi API = new PersonApi();
     private static final Person JOE = new Person('joe');
@@ -10,7 +10,7 @@ private class MockHttp_Test {
     private static void multipleEndpointFragments() {
 
         // Setup
-        new MockHttp()
+        new HttpMock()
                 .get('/v2/persons', new List<Person>{ JOE, TIM },200)
                 .get('/v2/person/tim', TIM, 200)
                 .mock();
@@ -30,7 +30,7 @@ private class MockHttp_Test {
     private static void multipleHttpMethods() {
 
         // Setup
-        new MockHttp()
+        new HttpMock()
             .get('/v2/person/tim', TIM, 200)
             .post('/v2/person/tim', true, 200)
             .mock();
@@ -50,7 +50,7 @@ private class MockHttp_Test {
     private static void fail() {
 
         // Setup
-        new MockHttp()
+        new HttpMock()
                 .get('/v2/persons', new CalloutException())
                 .mock();
 
