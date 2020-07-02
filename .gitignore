@@ -39,3 +39,4 @@ $RECYCLE.BIN/
 .prettierrc
 package-lock.json
 /temp.json
+/out/
