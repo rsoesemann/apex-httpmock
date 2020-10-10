@@ -31,9 +31,9 @@ private class HttpMock_Test {
 
         // Setup
         new HttpMock()
-            .get('/v2/person/tim', TIM, 200)
-            .post('/v2/person/tim', true, 200)
-            .mock();
+                .get('/v2/person/tim', TIM, 200)
+                .post('/v2/person/tim', true, 200)
+                .mock();
 
 
         // Exercise + Verify
@@ -42,6 +42,26 @@ private class HttpMock_Test {
         System.assertEquals(true,  API.updatePerson(new Person('tim')) );
         System.assertEquals('tim', API.getPerson('tim').name);
 
+        Test.stopTest();
+    }
+
+
+    @IsTest
+    private static void bodyConditions() {
+
+        // Setup
+        new HttpMock()
+                .post('/v2/person/tim#"age":33', true, 200)
+                .post('/v2/person/tim#"age":null', false, 200)
+                .mock();
+
+
+        // Exercise + Verify
+        Test.startTest();
+        System.assertEquals(true,  API.updatePerson(TIM) );
+
+        TIM.age = null;
+        System.assertEquals(false,  API.updatePerson(TIM) );
         Test.stopTest();
     }
 
@@ -87,23 +107,19 @@ private class HttpMock_Test {
         }
 
         public Boolean updatePerson(Person person) {
-            try {
-                HttpRequest request = new HttpRequest();
-                request.setMethod('POST');
-                request.setEndpoint('/v2/person/'+person.name);
-                new Http().send(request);
-            }
-            catch(Exception ex){
-                return false;
-            }
-
-            return true;
+            HttpRequest request = new HttpRequest();
+            request.setMethod('POST');
+            request.setEndpoint('/v2/person/'+person.name);
+            request.setHeader('Content-Type', 'application/json');
+            request.setBody( JSON.serialize(person) );
+            return Boolean.valueOf(new Http().send(request).getBody());
         }
     }
 
 
     private class Person {
         public String name;
+        public Integer age = 33;
 
         public Person(String name) {
             this.name = name;
