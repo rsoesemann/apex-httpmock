@@ -40,3 +40,4 @@ $RECYCLE.BIN/
 package-lock.json
 /temp.json
 /out/
+.pmdCache

@@ -92,9 +92,9 @@ public class HttpMock implements HttpCalloutMock {
         return result;
     }
 
-
+    
     private Boolean matches(HttpRequest request, String candidate) {
-        String url = '/' + request.getEndpoint().substringAfter('/');
+        String url = new Url(request.getEndpoint()).getPath();
         String bodyCondition = candidate.substringAfter(CONDITION);
         candidate = candidate.removeEnd(CONDITION + bodyCondition);
 
@@ -118,12 +118,7 @@ public class HttpMock implements HttpCalloutMock {
         HttpResponse result = new HttpResponse();
         result.setHeader('Content-Type', 'application/json');
         result.setStatusCode(statusCode);
-        result.setBody( serialized(body) );
+        result.setBody( JSON.serialize(body) );
         return result;
-    }
-
-
-    private String serialized(Object body) {
-        return (body instanceof ffhttp_ISerialize) ? ((ffhttp_ISerialize) body).serialize() : JSON.serialize(body);
     }
 }

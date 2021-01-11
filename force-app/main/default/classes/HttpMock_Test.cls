@@ -92,9 +92,12 @@ private class HttpMock_Test {
     // HELPER
 
     private class PersonApi {
+        
+        private final String BASE_URL = 'https://test.api.com';
+
         public List<Person> getPersons() {
             HttpRequest request = new HttpRequest();
-            request.setEndpoint('/v2/persons');
+            request.setEndpoint(BASE_URL + '/v2/persons');
             request.setMethod('GET');
             return (List<Person>) JSON.deserialize(new Http().send(request).getBody(), List<Person>.class);
         }
@@ -102,14 +105,14 @@ private class HttpMock_Test {
         public Person getPerson(String name) {
             HttpRequest request = new HttpRequest();
             request.setMethod('GET');
-            request.setEndpoint('/v2/person/'+name);
+            request.setEndpoint(BASE_URL + '/v2/person/'+name);
             return (Person) JSON.deserialize(new Http().send(request).getBody(), Person.class);
         }
 
         public Boolean updatePerson(Person person) {
             HttpRequest request = new HttpRequest();
             request.setMethod('POST');
-            request.setEndpoint('/v2/person/'+person.name);
+            request.setEndpoint(BASE_URL + '/v2/person/'+person.name);
             request.setHeader('Content-Type', 'application/json');
             request.setBody( JSON.serialize(person) );
             return Boolean.valueOf(new Http().send(request).getBody());

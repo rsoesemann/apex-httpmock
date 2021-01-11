@@ -1,3 +1,3 @@
 #!/bin/bash
-DEV_HUB_ALIAS="DevHub"
-SCRATCH_ORG_ALIAS="apex-mocks_DEV"
+DEV_HUB_ALIAS="DevHubPrivate"
+SCRATCH_ORG_ALIAS="apex-httpmock_DEV"
