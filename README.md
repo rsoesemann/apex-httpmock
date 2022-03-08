@@ -33,6 +33,7 @@ private class MyApi_Test {
                 .post('/v2/person/tim#"age":null', false, 200)
 
                 // failures
+                .get('/v1/persons', false, 505)
                 .get('/v2/persons', new CalloutException())
                 
                 .mock();
